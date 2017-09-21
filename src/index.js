@@ -1,5 +1,5 @@
 import './style.css'
-import testImageSrc from './test.png';
+import testImageSrc from './test.jpg';
 
 const testImage = new Image()
 testImage.src = testImageSrc
