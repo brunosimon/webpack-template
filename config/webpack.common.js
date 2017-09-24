@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const extractSass = new ExtractTextPlugin({
     filename: 'css/[name].[contenthash].css',
@@ -20,7 +21,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: 'src/index.html'
 		}),
-        extractSass
+        extractSass,
+        new CopyWebpackPlugin([{ from: path.resolve(__dirname, '../static'), to: 'static' }])
     ],
     output:
     {
