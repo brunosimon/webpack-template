@@ -1,8 +1,8 @@
-import './style.css'
+import './style.sass'
 import testImageSrc from './test.jpg';
 
 const testImage = new Image()
 testImage.src = testImageSrc
 document.body.appendChild(testImage)
 
-console.log('All fine')
+console.log('All fine!!')

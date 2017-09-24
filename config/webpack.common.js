@@ -1,52 +1,83 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+
+const extractSass = new ExtractTextPlugin({
+    filename: 'css/[name].[contenthash].css',
+    disable: process.env.NODE_ENV === 'development'
+})
 
 module.exports = {
     entry: './src/index.js',
     devtool: 'source-map',
 	devServer:
 	{
-		contentBase: path.resolve(__dirname, '../dist'),
+		contentBase: path.resolve(__dirname, '../build'),
 		hot: true
 	},
     plugins:
     [
-        new CleanWebpackPlugin([path.resolve(__dirname, '../dist')]),
         new HtmlWebpackPlugin({
             template: 'src/index.html'
-		})
+		}),
+        extractSass
     ],
     output:
     {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, '../dist')
+        filename: 'js/bundle.[hash].js',
+        path: path.resolve(__dirname, '../build')
     },
     module:
     {
         rules:
         [
             {
-                test: /\.css$/,
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
                 use:
-                [
-                    'style-loader',
-                    'css-loader'
-                ]
+                {
+                    loader: 'babel-loader',
+                    options:
+                    {
+                        presets: ['env']
+                    }
+                }
+            },
+            {
+                test: /\.sass$/,
+                use: extractSass.extract({
+                    use: [
+                        {
+                            loader: 'css-loader'
+                        },
+                        {
+                            loader: 'sass-loader'
+                        }
+                    ],
+                    fallback: 'style-loader'
+                })
             },
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 use:
-                [
-                    'file-loader'
-                ]
+                {
+                    loader: 'file-loader',
+                    options:
+                    {
+                        name: 'images/[name].[hash].[ext]'
+                    }
+                }
             },
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
                 use:
-                [
-                    'file-loader'
-                ]
+                {
+                    loader: 'file-loader',
+                    options:
+                    {
+                        name: 'fonts/[name].[hash].[ext]'
+                    }
+                }
             }
         ]
     }
