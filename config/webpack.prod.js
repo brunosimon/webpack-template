@@ -5,12 +5,12 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = merge(
-	webpackCommonConfig,
-	{
-		plugins:
-		[
-			new CleanWebpackPlugin(['build'], { root: path.resolve(__dirname, '..') }),
-			new UglifyJSPlugin()
-		]
-	}
+    webpackCommonConfig,
+    {
+        plugins:
+        [
+            new CleanWebpackPlugin(['build'], { root: path.resolve(__dirname, '..') }),
+            new UglifyJSPlugin()
+        ]
+    }
 )

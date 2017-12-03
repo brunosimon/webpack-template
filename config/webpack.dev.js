@@ -4,16 +4,16 @@ const webpack = require('webpack')
 const ip = require('ip')
 
 module.exports = merge(
-	webpackCommonConfig,
-	{
-		devServer:
-		{
-			contentBase: './dist',
-        	host: ip.address()
-		},
-		plugins:
-		[
-			new webpack.HotModuleReplacementPlugin()
-		]
-	}
+    webpackCommonConfig,
+    {
+        devServer:
+        {
+            contentBase: './dist',
+            host: ip.address()
+        },
+        plugins:
+        [
+            new webpack.HotModuleReplacementPlugin()
+        ]
+    }
 )
